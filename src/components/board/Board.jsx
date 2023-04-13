@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './Board.css'
 import Card from '../card/Card'
 import cardBack1 from '../../assets/images/card-back-1.jpg'
 import cardBack2 from '../../assets/images/card-back-2.jpg'
