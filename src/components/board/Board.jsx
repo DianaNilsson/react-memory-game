@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from '../card/Card'
 import cardBack1 from '../../assets/images/card-back-1.jpg'
 import cardBack2 from '../../assets/images/card-back-2.jpg'
@@ -17,25 +17,44 @@ const Board = () => {
     { id: 8, image: cardBack4, isFlipped: false }
   ])
 
-  const shuffleCards = () => {
-    setCards((prevState) => {
-      const shuffledCards = [...prevState]
-      shuffledCards.sort(() => Math.random() - 0.5)
-      return shuffledCards
-    })
-  }
+  const [selectedCards, setSelectedCards] = useState([])
+  const [canSelectCards, setCanSelectCards] = useState(true)
 
   const handleCardClick = (id) => {
-    setCards((prevState) =>
-      prevState.map((card) =>
-        card.id === id ? { ...card, isFlipped: !card.isFlipped } : card
-      )
-    )
+    if (canSelectCards) {
+      const clickedCard = cards.find((card) => card.id === id)
+
+      if (!clickedCard.isFlipped) {
+        const updatedCards = cards.map((card) =>
+          card.id === id ? { ...card, isFlipped: true } : card
+        )
+        setCards(updatedCards)
+        setSelectedCards([...selectedCards, clickedCard])
+
+        if (selectedCards.length === 1) {
+          setCanSelectCards(false)
+          setTimeout(() => {
+            const [firstCard] = selectedCards
+            const secondCard = clickedCard
+            if (firstCard.image !== secondCard.image) {
+              const updatedCards = cards.map((card) =>
+                card.id === firstCard.id || card.id === secondCard.id
+                  ? { ...card, isFlipped: false }
+                  : card
+              )
+              setCards(updatedCards)
+            }
+            setSelectedCards([])
+            setCanSelectCards(true)
+          }, 2000)
+        }
+      }
+    }
   }
 
-  // Shuffle cards on component mount
-  React.useEffect(() => {
-    shuffleCards()
+  useEffect(() => {
+    const shuffledCards = cards.sort(() => Math.random() - 0.5)
+    setCards(shuffledCards)
   }, [])
 
   return (
