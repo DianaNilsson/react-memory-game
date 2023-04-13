@@ -25,29 +25,51 @@ const Board = () => {
       const clickedCard = cards.find((card) => card.id === id)
 
       if (!clickedCard.isFlipped) {
-        const updatedCards = cards.map((card) =>
+        let updatedCards = cards.map((card) =>
           card.id === id ? { ...card, isFlipped: true } : card
         )
-        setCards(updatedCards)
-        setSelectedCards([...selectedCards, clickedCard])
 
-        if (selectedCards.length === 1) {
+        if (selectedCards.length === 0) {
+          setSelectedCards([clickedCard])
+        } else if (selectedCards.length === 1) {
           setCanSelectCards(false)
-          setTimeout(() => {
-            const [firstCard] = selectedCards
-            const secondCard = clickedCard
-            if (firstCard.image !== secondCard.image) {
-              const updatedCards = cards.map((card) =>
-                card.id === firstCard.id || card.id === secondCard.id
+          setSelectedCards([...selectedCards, clickedCard])
+
+          const [firstCard] = selectedCards
+
+          if (clickedCard.image === firstCard.image) {
+            updatedCards = updatedCards.map((card) =>
+              card.id === firstCard.id || card.id === clickedCard.id
+                ? { ...card, isMatched: true }
+                : card
+            )
+
+            const matchedCards = updatedCards.filter(
+              (card) => card.isMatched === true
+            )
+
+            if (matchedCards.length === cards.length) {
+              alert('You win!')
+            }
+
+            setSelectedCards([])
+            setCanSelectCards(true)
+          } else {
+            setTimeout(() => {
+              updatedCards = updatedCards.map((card) =>
+                card.id === firstCard.id || card.id === clickedCard.id
                   ? { ...card, isFlipped: false }
                   : card
               )
+
+              setSelectedCards([])
               setCards(updatedCards)
-            }
-            setSelectedCards([])
-            setCanSelectCards(true)
-          }, 2000)
+              setCanSelectCards(true)
+            }, 2000)
+          }
         }
+
+        setCards(updatedCards)
       }
     }
   }
