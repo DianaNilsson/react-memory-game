@@ -17,6 +17,14 @@ const Board = () => {
     { id: 8, image: cardBack4, isFlipped: false }
   ])
 
+  const shuffleCards = () => {
+    setCards((prevState) => {
+      const shuffledCards = [...prevState]
+      shuffledCards.sort(() => Math.random() - 0.5)
+      return shuffledCards
+    })
+  }
+
   const handleCardClick = (id) => {
     setCards((prevState) =>
       prevState.map((card) =>
@@ -24,6 +32,11 @@ const Board = () => {
       )
     )
   }
+
+  // Shuffle cards on component mount
+  React.useEffect(() => {
+    shuffleCards()
+  }, [])
 
   return (
     <div className="board">
