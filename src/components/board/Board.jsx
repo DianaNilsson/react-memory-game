@@ -63,8 +63,8 @@ const Board = () => {
                   : card
               )
 
-              setSelectedCards([])
               setCards(updatedCards)
+              setSelectedCards([])
               setCanSelectCards(true)
             }, 2000)
           }
