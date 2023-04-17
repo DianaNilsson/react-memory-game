@@ -7,16 +7,7 @@ import cardBack3 from '../../assets/images/card-back-3.jpg'
 import cardBack4 from '../../assets/images/card-back-4.jpg'
 
 const Board = () => {
-  const [cards, setCards] = useState([
-    { id: 1, image: cardBack1, isFlipped: false },
-    { id: 2, image: cardBack1, isFlipped: false },
-    { id: 3, image: cardBack2, isFlipped: false },
-    { id: 4, image: cardBack2, isFlipped: false },
-    { id: 5, image: cardBack3, isFlipped: false },
-    { id: 6, image: cardBack3, isFlipped: false },
-    { id: 7, image: cardBack4, isFlipped: false },
-    { id: 8, image: cardBack4, isFlipped: false }
-  ])
+  const [cards, setCards] = useState([])
 
   const [selectedCards, setSelectedCards] = useState([])
   const [canSelectCards, setCanSelectCards] = useState(true)
@@ -63,10 +54,10 @@ const Board = () => {
                   : card
               )
 
-              setCards(updatedCards)
               setSelectedCards([])
+              setCards(updatedCards)
               setCanSelectCards(true)
-            }, 2000)
+            }, 1200)
           }
         }
 
@@ -76,6 +67,16 @@ const Board = () => {
   }
 
   useEffect(() => {
+    let cards = [
+      { id: 1, image: cardBack1, isFlipped: false },
+      { id: 2, image: cardBack1, isFlipped: false },
+      { id: 3, image: cardBack2, isFlipped: false },
+      { id: 4, image: cardBack2, isFlipped: false },
+      { id: 5, image: cardBack3, isFlipped: false },
+      { id: 6, image: cardBack3, isFlipped: false },
+      { id: 7, image: cardBack4, isFlipped: false },
+      { id: 8, image: cardBack4, isFlipped: false }
+    ]
     const shuffledCards = cards.sort(() => Math.random() - 0.5)
     setCards(shuffledCards)
   }, [])
