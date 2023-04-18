@@ -6,23 +6,30 @@ import cardBack2 from '../../assets/images/card-back-2.jpg'
 import cardBack3 from '../../assets/images/card-back-3.jpg'
 import cardBack4 from '../../assets/images/card-back-4.jpg'
 
-const Board = () => {
+const Board = ({ onGameStart, onGameEnd }) => {
   const [cards, setCards] = useState([])
-
   const [selectedCards, setSelectedCards] = useState([])
   const [canSelectCards, setCanSelectCards] = useState(true)
+  const [gameStarted, setGameStarted] = useState(false)
 
   const handleCardClick = (id) => {
     if (canSelectCards) {
       const clickedCard = cards.find((card) => card.id === id)
 
       if (!clickedCard.isFlipped) {
+        if (!gameStarted) {
+          setGameStarted(true)
+          onGameStart()
+        }
+
         let updatedCards = cards.map((card) =>
           card.id === id ? { ...card, isFlipped: true } : card
         )
 
         if (selectedCards.length === 0) {
           setSelectedCards([clickedCard])
+
+          console.log('updatedCard', updatedCards)
         } else if (selectedCards.length === 1) {
           setCanSelectCards(false)
           setSelectedCards([...selectedCards, clickedCard])
@@ -41,7 +48,7 @@ const Board = () => {
             )
 
             if (matchedCards.length === cards.length) {
-              alert('You win!')
+              onGameEnd()
             }
 
             setSelectedCards([])
