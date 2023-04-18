@@ -22,16 +22,23 @@ const App = () => {
       <h1>Kids Memory</h1>
       <h2>
         {gameStatus === 'notStarted' &&
-          'Starta spelet genom att klicka på ett av korten'}
-        {gameStatus === 'started' && 'Spelet är igång'}
+          'Starta spelet genom att klicka på ett av korten.'}
+        {gameStatus === 'started' &&
+          'Spelet är igång. Klicka på ett kort för att kika under.'}
         {gameStatus === 'ended' && 'Grattis, du vann!'}
       </h2>
-      {gameStatus === 'started' && (
-        <button onClick={handleNewGame}>Starta om</button>
-      )}
-      {gameStatus === 'ended' && (
-        <button onClick={handleNewGame}>Spela igen</button>
-      )}
+      <div className="button-container">
+        {gameStatus === 'started' && (
+          <button className="new-game-button" onClick={handleNewGame}>
+            Starta om
+          </button>
+        )}
+        {gameStatus === 'ended' && (
+          <button className="new-game-button" onClick={handleNewGame}>
+            Spela igen
+          </button>
+        )}
+      </div>
       <div className="game-container">
         <Board
           gameStatus={gameStatus}

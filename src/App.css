@@ -29,5 +29,25 @@ h2 {
   font-family: 'Baloo 2', cursive;
   font-size: 20px;
   text-align: center;
+  margin-bottom: 16px;
+}
+
+.button-container {
+  text-align: center;
+  height: 40px;
   margin-bottom: 20px;
+}
+
+.new-game-button {
+  background-color: #4da2c6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.new-game-button:hover {
+  background-color: #34738d;
 }
