@@ -13,6 +13,10 @@ const App = () => {
     setGameStatus('ended')
   }
 
+  const handleNewGame = () => {
+    setGameStatus('notStarted')
+  }
+
   return (
     <div className="App">
       <h1>Kids Memory</h1>
@@ -22,8 +26,18 @@ const App = () => {
         {gameStatus === 'started' && 'Spelet är igång'}
         {gameStatus === 'ended' && 'Grattis, du vann!'}
       </h2>
+      {gameStatus === 'started' && (
+        <button onClick={handleNewGame}>Starta om</button>
+      )}
+      {gameStatus === 'ended' && (
+        <button onClick={handleNewGame}>Spela igen</button>
+      )}
       <div className="game-container">
-        <Board onGameStart={handleGameStart} onGameEnd={handleGameEnd} />
+        <Board
+          gameStatus={gameStatus}
+          onGameStart={handleGameStart}
+          onGameEnd={handleGameEnd}
+        />
       </div>
     </div>
   )

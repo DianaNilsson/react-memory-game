@@ -6,19 +6,17 @@ import cardBack2 from '../../assets/images/card-back-2.jpg'
 import cardBack3 from '../../assets/images/card-back-3.jpg'
 import cardBack4 from '../../assets/images/card-back-4.jpg'
 
-const Board = ({ onGameStart, onGameEnd }) => {
+const Board = ({ gameStatus, onGameStart, onGameEnd }) => {
   const [cards, setCards] = useState([])
   const [selectedCards, setSelectedCards] = useState([])
   const [canSelectCards, setCanSelectCards] = useState(true)
-  const [gameStarted, setGameStarted] = useState(false)
 
   const handleCardClick = (id) => {
     if (canSelectCards) {
       const clickedCard = cards.find((card) => card.id === id)
 
       if (!clickedCard.isFlipped) {
-        if (!gameStarted) {
-          setGameStarted(true)
+        if (gameStatus === 'notStarted') {
           onGameStart()
         }
 
@@ -74,19 +72,24 @@ const Board = ({ onGameStart, onGameEnd }) => {
   }
 
   useEffect(() => {
-    let cards = [
-      { id: 1, image: cardBack1, isFlipped: false },
-      { id: 2, image: cardBack1, isFlipped: false },
-      { id: 3, image: cardBack2, isFlipped: false },
-      { id: 4, image: cardBack2, isFlipped: false },
-      { id: 5, image: cardBack3, isFlipped: false },
-      { id: 6, image: cardBack3, isFlipped: false },
-      { id: 7, image: cardBack4, isFlipped: false },
-      { id: 8, image: cardBack4, isFlipped: false }
-    ]
-    const shuffledCards = cards.sort(() => Math.random() - 0.5)
-    setCards(shuffledCards)
-  }, [])
+    if (gameStatus === 'notStarted') {
+      console.log('Shuffle cards')
+      let cards = [
+        { id: 1, image: cardBack1, isFlipped: false },
+        { id: 2, image: cardBack1, isFlipped: false },
+        { id: 3, image: cardBack2, isFlipped: false },
+        { id: 4, image: cardBack2, isFlipped: false },
+        { id: 5, image: cardBack3, isFlipped: false },
+        { id: 6, image: cardBack3, isFlipped: false },
+        { id: 7, image: cardBack4, isFlipped: false },
+        { id: 8, image: cardBack4, isFlipped: false }
+      ]
+      const shuffledCards = cards.sort(() => Math.random() - 0.5)
+      setCards(shuffledCards)
+      setSelectedCards([])
+      setCanSelectCards(true)
+    }
+  }, [gameStatus])
 
   return (
     <div className="board">
