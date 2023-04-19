@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import './Board.css'
 import Card from '../card/Card'
 import cardBack1 from '../../assets/images/card-back-1.jpg'
 import cardBack2 from '../../assets/images/card-back-2.jpg'
@@ -26,8 +25,6 @@ const Board = ({ gameStatus, onGameStart, onGameEnd }) => {
 
         if (selectedCards.length === 0) {
           setSelectedCards([clickedCard])
-
-          console.log('updatedCard', updatedCards)
         } else if (selectedCards.length === 1) {
           setCanSelectCards(false)
           setSelectedCards([...selectedCards, clickedCard])
@@ -73,7 +70,6 @@ const Board = ({ gameStatus, onGameStart, onGameEnd }) => {
 
   useEffect(() => {
     if (gameStatus === 'notStarted') {
-      console.log('Shuffle cards')
       let cards = [
         { id: 1, image: cardBack1, isFlipped: false },
         { id: 2, image: cardBack1, isFlipped: false },
